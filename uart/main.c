@@ -77,11 +77,19 @@ void delay() {
     }
 }
 
+void timer2_interrupt() __interrupt(1) {
+}
+
+void test() {
+}
+
 uint8_t msg[] = "command console: \n";
 __code uint8_t const_msg[] = "COMMAND CONSOLE: \n";
 
 void main() {
     uint8_t i = 0;
+
+    test();
 
     // CD2,CD1,CD0 clock core divider bits
     // 0,0,0 => 16.777216 MHz
