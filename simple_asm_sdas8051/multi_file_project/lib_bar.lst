@@ -1,0 +1,26 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Intel 8051), page 1.
+Hexadecimal [24-Bits]
+
+
+
+                                      1 
+                                      2 .globl bar_add
+                                      3 .globl bar_mult
+                                      4 .globl bar_shift
+                                      5 .globl bar1, bar2, bar3, bar4
+                                      6 
+                                      7 .local _cnt
+                                      8 
+                                      9 .area BAR (code, abs)
+      000200                         10 .org 0x0200
+                                     11 
+      000200 04               [12]   12 bar1: inc A
+      000201 04               [12]   13 bar2: inc A
+      000202 04               [12]   14 bar3: inc A
+      000203 04               [12]   15 bar4: inc A
+      000204 22               [24]   16     ret
+                                     17 
+      000205                         18 bar_add:
+      000205                         19 bar_mult:
+      000205                         20 bar_shift:
+      000205 22               [24]   21     ret

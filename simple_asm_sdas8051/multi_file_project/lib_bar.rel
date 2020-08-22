@@ -1,0 +1,25 @@
+XH3
+H 3 areas 8 global symbols
+S .__.ABS. Def000000
+A _CODE size 0 flags 0 addr 0
+A BAR size 0 flags 28 addr 0
+A BAR0 size 6 flags 28 addr 200
+S bar_mult Def000205
+S bar1 Def000200
+S bar2 Def000201
+S bar3 Def000202
+S bar4 Def000203
+S bar_shift Def000205
+S bar_add Def000205
+T 00 02 00
+R 00 00 00 02
+T 00 02 00 04 04 04 04 22
+R 00 00 00 02
+T 00 02 05
+R 00 00 00 02
+T 00 02 05
+R 00 00 00 02
+T 00 02 05
+R 00 00 00 02
+T 00 02 05 22
+R 00 00 00 02

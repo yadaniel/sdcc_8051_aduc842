@@ -1,0 +1,47 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Intel 8051), page 1.
+Hexadecimal [24-Bits]
+(program)
+
+
+                                      1 .title(program)
+                                      2 
+                                      3 .local start
+                                      4 .globl delay
+                                      5 
+                                      6 .globl foo1, foo_add
+                                      7 .globl bar1, bar_add
+                                      8 
+                                      9 .area MAIN(code, abs)
+      000000                         10 .org 0x0000
+                                     11     ;; mov SP, #0x50
+                                     12     ;; mov SP, #0x07 ;; default
+      000000 74 AA            [12]   13     mov A, #0xAA
+      000002 C0 E0            [24]   14     push A
+      000004 74 00            [12]   15     mov A, #0
+      000006 D0 E0            [24]   16     pop A
+      000008 02 00 20         [24]   17     ljmp start
+                                     18 
+      000020                         19 .org 0x0020
+      000020                         20 start:
+      000020 12 00 50         [24]   21     lcall delay
+      000023 B2 80            [12]   22     cpl P0.0
+      000025 B2 90            [12]   23     cpl P1.0
+      000027 B2 A0            [12]   24     cpl P2.0
+      000029 B2 B0            [12]   25     cpl P3.0
+      00002B 00 20            [12]   26     ajmp start
+      00002D 02 00 20         [24]   27     ljmp start
+      000030 12 00 00         [24]   28     lcall foo1
+      000033 12 00 00         [24]   29     lcall foo_add
+      000036 12 00 00         [24]   30     lcall bar1
+      000039 12 00 00         [24]   31     lcall bar_add
+                                     32 
+      000050                         33 .org 0x050
+      000050                         34 delay:
+      000050 79 FF            [12]   35     mov r1, #0xFF
+      000052                         36 outer:
+      000052 78 FF            [12]   37     mov r0, #0xFF
+      000054                         38 inner:
+      000054 D8 FE            [24]   39     djnz R0, inner
+      000056 D9 FA            [24]   40     djnz R1, outer
+      000058 22               [24]   41     ret
+                                     42 

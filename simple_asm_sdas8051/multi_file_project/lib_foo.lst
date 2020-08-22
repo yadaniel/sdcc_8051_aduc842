@@ -1,0 +1,36 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Intel 8051), page 1.
+Hexadecimal [24-Bits]
+
+
+
+                                      1 
+                                      2  .globl foo_add
+                                      3  .globl foo_mult
+                                      4  .globl foo_shift
+                                      5  .globl foo, foo1, foo2, foo3, foo4
+                                      6 
+                                      7 .local _cnt
+                                      8 
+                                      9 .area FOO (code, abs)
+      000100                         10 .org 0x0100
+                                     11 
+      000100                         12 foo1:
+      000100 04               [12]   13     inc A
+      000101 80 00            [24]   14     sjmp foo2
+      000103                         15 foo2: 
+      000103 04               [12]   16     inc A
+      000104 80 00            [24]   17     sjmp foo3
+      000106                         18 foo3: 
+      000106 04               [12]   19     inc A
+      000107 80 00            [24]   20     sjmp foo4
+      000109                         21 foo4: 
+      000109 04               [12]   22     inc A
+      00010A 80 00            [24]   23     sjmp foo
+      00010C 22               [24]   24 foo: ret
+                                     25 
+      00010D                         26 foo_add:
+      00010D                         27 foo_mult:
+      00010D                         28 foo_shift:
+      00010D 22               [24]   29     ret
+                                     30 
+                                     31 

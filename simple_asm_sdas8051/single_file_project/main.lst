@@ -1,0 +1,103 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Intel 8051), page 1.
+Hexadecimal [24-Bits]
+
+
+
+                                      1 .area FOO (code)
+                                      2 .area BAR (code)
+                                      3 .area CSEG (abs, code)
+                                      4 
+      000000                          5 .org 0x0000
+                                      6     ;; mov SP, #0x50
+      000000 74 AA            [12]    7     mov A, #0xAA
+      000002 C0 E0            [24]    8     push A
+      000004 C0 E0            [24]    9     push A
+      000006 74 00            [12]   10     mov A, #0
+      000008 D0 E0            [24]   11     pop A
+      00000A D0 E0            [24]   12     pop A
+      00000C 02 00 10         [24]   13     ljmp start
+                                     14 
+      000010                         15 .org 0x0010
+      000010                         16 start:
+      000010 12 00 24         [24]   17     lcall delay
+      000013 B2 80            [12]   18     cpl P0.0
+      000015 B2 90            [12]   19     cpl P1.0
+      000017 B2 A0            [12]   20     cpl P2.0
+      000019 B2 B0            [12]   21     cpl P3.0
+      00001B 12 00 30         [24]   22     lcall addfunc
+                                     23     ;;lcall multfunc
+      00001E 00 10            [12]   24     ajmp start
+      000020 02 00 10         [24]   25     ljmp start
+                                     26 
+                                     27 ;; .org 0x0020
+                                     28 ;; not enough space for start
+                                     29 ;; carefull with placing code at some location, when more space is needed the ljmp target will be wrong
+      000024                         30 .org 0x0024
+      000024                         31 delay:
+      000024 79 FF            [12]   32     mov r1, #0xFF
+      000026                         33 outer:
+      000026 78 FF            [12]   34     mov r0, #0xFF
+      000028                         35 inner:
+      000028 D8 FE            [24]   36     djnz R0, inner
+      00002A D9 FA            [24]   37     djnz R1, outer
+      00002C 22               [24]   38     ret
+                                     39 
+      000030                         40 .org 0x0030
+      000030                         41 addfunc:
+                                     42     ;; mov R0, #1
+                                     43     ;; mov A, #127
+                                     44     ;; mov A, #255
+                                     45     ;; inc A
+                                     46     ;; add A, R0
+      000030 E4               [12]   47     clr A
+      000031 04               [12]   48     inc A
+      000032 04               [12]   49     inc A
+      000033 04               [12]   50     inc A
+      000034 04               [12]   51     inc A
+      000035 43 D0 08         [24]   52     orl PSW, #0b1000
+      000038 78 01            [12]   53     mov R0, #0b00000001
+      00003A 79 02            [12]   54     mov R1, #0b00000010
+      00003C 7A 04            [12]   55     mov R2, #0b00000100
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Intel 8051), page 2.
+Hexadecimal [24-Bits]
+
+
+
+      00003E 7B 08            [12]   56     mov R3, #0b00001000
+      000040 7C 10            [12]   57     mov R4, #0b00010000
+      000042 7D 20            [12]   58     mov R5, #0b00100000
+      000044 7E 40            [12]   59     mov R6, #0b01000000
+      000046 7F 80            [12]   60     mov R7, #0b10000000
+      000048 43 D0 10         [24]   61     orl PSW, #0b10000
+      00004B 78 03            [12]   62     mov R0, #0b00000011
+      00004D 79 06            [12]   63     mov R1, #0b00000110
+      00004F 7A 0C            [12]   64     mov R2, #0b00001100
+      000051 7B 18            [12]   65     mov R3, #0b00011000
+      000053 7C 30            [12]   66     mov R4, #0b00110000
+      000055 7D 60            [12]   67     mov R5, #0b01100000
+      000057 7E C0            [12]   68     mov R6, #0b11000000
+      000059 7F 81            [12]   69     mov R7, #0b10000001
+      00005B 53 D0 E7         [24]   70     anl PSW, #0b11100111
+      00005E 22               [24]   71     ret
+                                     72 
+      000050                         73 .org 0x0050
+      000050                         74 multfunc:
+      000050 74 01            [12]   75     mov A, #1
+      000052                         76 loop:
+      000052 75 F0 02         [24]   77     mov B, #2
+      000055 A4               [48]   78     mul AB
+      000056 30 E7 F9         [24]   79     jnb A.7, loop
+      000059 22               [24]   80     ret
+                                     81 
+      00005A                         82 unused_func:
+      00005A 74 00            [12]   83     mov A, #0
+      00005C 75 E0 00         [24]   84     mov ACC, #0
+      00005F D2 D5            [12]   85     setb PSW.5  ;; F0
+      000061 D2 D5            [12]   86     setb F0
+      000063 C2 D5            [12]   87     clr F0
+      000065 C2 D5            [12]   88     clr PSW.5
+      000067 22               [24]   89     ret
+                                     90 
+                                     91 ;; end
+                                     92 ;; not required by sdas8051
+                                     93 
